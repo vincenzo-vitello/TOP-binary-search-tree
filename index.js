@@ -118,20 +118,60 @@ class BinarySearchTree {
 
     }
 
-    inOrder() {
+    inOrder(node = this.root) {
+        if(!node) return [];
 
+        let inOrderArr = [];
+        function inOrderTraversal(node) {
+            if(node.left) inOrderTraversal(node.left);
+            inOrderArr.push(node.data);
+            if(node.right) inOrderTraversal(node.right)
+        }
+        inOrderTraversal(node);
+        return inOrderArr
     }
 
-    preOrder() {
+    preOrder(node = this.root) {
+        if(!node) return [];
 
+        let preOrderArr = [];
+        function preOrderTraversal(node) {
+            if(node) preOrderArr.push(node.data);
+            if(node.left) preOrderTraversal(node.left);
+            if(node.right) preOrderTraversal(node.right);
+        }
+        preOrderTraversal(node)
+        return preOrderArr
     }
 
-    postOrder() {
+    postOrder(node = this.root) {
+        if(!node) return [];
 
+        let postOrderArr = [];
+        function postOrderTraversal(node) {
+            if(node.left) postOrderTraversal(node.left);
+            if(node.right) postOrderTraversal(node.right);
+            if(node) postOrderArr.push(node.data)
+        }
+        postOrderTraversal(node)
+        return postOrderArr
     }
 
-    levelOrder() {
+    levelOrder(node = this.root) {
+        let levelOrderArr = [];
+        let queue = [];
+        
+        if(this.root) {
+        queue.push(this.root)
 
+        while(queue.length > 0) {
+            let node = queue.shift();
+            levelOrderArr.push(node.data)
+            if(node.left) queue.push(node.left)
+            if(node.right) queue.push(node.right)
+            }
+            return levelOrderArr
+        } else return null
     }
 }
 
@@ -172,4 +212,7 @@ console.log("depth: ", myTree.depth(myTree.root.right))
 console.log("depth: ", myTree.depth(myTree.root.right.left))
 prettyPrint(myTree.root)
 console.log("is the tree balanced? ", myTree.isBalanced())
-
+console.log(myTree.inOrder())
+console.log(myTree.preOrder())
+console.log(myTree.postOrder())
+console.log(myTree.levelOrder())
