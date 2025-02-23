@@ -225,5 +225,5 @@ console.log("post order tree: ", myTree.postOrder())
 console.log("level order tree: ", myTree.levelOrder())
 myTree.rebalance();
 console.log('rebalance function called');
-console.log(myTree.isBalanced())
+console.log("is the tree balanced? ", myTree.isBalanced())
 prettyPrint(myTree.root)
