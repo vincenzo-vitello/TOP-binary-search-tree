@@ -10,7 +10,17 @@ class BinarySearchTree {
     constructor() {
         this.root = null
     }
-
+    buildTree(arr) {
+        if (arr.length === 0) return null; 
+    
+        let middle = Math.floor(arr.length / 2);
+        let node = new Node(arr[middle]);
+    
+        node.left = this.buildTree(arr.slice(0, middle)); 
+        node.right = this.buildTree(arr.slice(middle + 1)); 
+    
+        return node;
+    }
     insert(data) {
         if (!this.root) { 
             this.root = new Node(data);
@@ -115,7 +125,9 @@ class BinarySearchTree {
     }
 
     rebalance() {
-
+        if(!this.isBalanced()) {
+            this.root = this.buildTree(this.inOrder())
+        }
     }
 
     inOrder(node = this.root) {
@@ -177,12 +189,6 @@ class BinarySearchTree {
 
 const data = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 
-function buildTree(arr) {
-    arr.forEach(element => {
-        myTree.insert(element) 
-     });
-}
-
 function prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
       return;
@@ -197,8 +203,9 @@ function prettyPrint(node, prefix = "", isLeft = true) {
   };
 
 const myTree = new BinarySearchTree
-
-buildTree(data)
+data.forEach((element) => 
+    myTree.insert(element)
+)
 prettyPrint(myTree.root)
 myTree.delete(1)
 prettyPrint(myTree.root)
@@ -212,7 +219,11 @@ console.log("depth: ", myTree.depth(myTree.root.right))
 console.log("depth: ", myTree.depth(myTree.root.right.left))
 prettyPrint(myTree.root)
 console.log("is the tree balanced? ", myTree.isBalanced())
-console.log(myTree.inOrder())
-console.log(myTree.preOrder())
-console.log(myTree.postOrder())
-console.log(myTree.levelOrder())
+console.log("in order tree: ", myTree.inOrder())
+console.log("pre order tree: ", myTree.preOrder())
+console.log("post order tree: ", myTree.postOrder())
+console.log("level order tree: ", myTree.levelOrder())
+myTree.rebalance();
+console.log('rebalance function called');
+console.log(myTree.isBalanced())
+prettyPrint(myTree.root)
